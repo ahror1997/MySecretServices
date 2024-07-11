@@ -18,5 +18,8 @@ namespace MySecretServices.Models
 
 		[Required]
 		public int Copy { get; set; }
-	}
+
+        [Required]
+        public string Path { get; set; }
+    }
 }

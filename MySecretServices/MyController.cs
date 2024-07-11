@@ -19,17 +19,17 @@ namespace MySecretServices
 
 		[HttpPost]
 		[Route("api/v1/printer/print")]
-		public IHttpActionResult Get([FromBody] PrintProduct product)
+		public IHttpActionResult Print([FromBody] PrintProduct product)
 		{
-			string userDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			//string userDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 			//string labelPath = Path.Combine(userDocumentsPath, "label.btw");
 
-			string labelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "label.btw");
+			//string labelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "label.btw");
 
 			Engine engine = new Engine();
 			engine.Start();
 
-			LabelFormatDocument labelFormatDocument = engine.Documents.Open(labelPath);
+			LabelFormatDocument labelFormatDocument = engine.Documents.Open(product.Path);
 			labelFormatDocument.SubStrings["name"].Value = product.Name;
 			labelFormatDocument.SubStrings["barcode"].Value = product.Barcode;
 			labelFormatDocument.SubStrings["price"].Value = product.Price;
@@ -53,6 +53,11 @@ namespace MySecretServices
 			DrvLP temp = new DrvLP();
 			temp.RemoteHost = ip;
 			int status = temp.Connect();
+
+			// logic
+
+			temp.Disconnect();
+
 			return Ok(status);
 		}
 
