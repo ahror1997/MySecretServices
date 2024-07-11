@@ -33,7 +33,7 @@ http://localhost:8123 <=> `{domain}`
 ```
 ?ip=192.168.255.255
 ```
-* * body example (required)
+* body example (required)
 ```
 [
     {

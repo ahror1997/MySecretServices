@@ -1,10 +1,8 @@
 ﻿using AddIn;
 using Seagull.BarTender.Print;
 using System.Collections.Generic;
-using System;
 using System.Web.Http;
 using MySecretServices.Models;
-using System.IO;
 
 namespace MySecretServices
 {
@@ -21,12 +19,12 @@ namespace MySecretServices
 		[Route("api/v1/printer/print")]
 		public IHttpActionResult Print([FromBody] PrintProduct product)
 		{
-			//string userDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-			//string labelPath = Path.Combine(userDocumentsPath, "label.btw");
+            if (!ModelState.IsValid)
+            {
+				return BadRequest(ModelState);
+            }
 
-			//string labelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "label.btw");
-
-			Engine engine = new Engine();
+            Engine engine = new Engine();
 			engine.Start();
 
 			LabelFormatDocument labelFormatDocument = engine.Documents.Open(product.Path);
@@ -41,7 +39,6 @@ namespace MySecretServices
 			}
 
 			engine.Stop();
-
 
 			return Ok(product);
 		}
@@ -65,7 +62,14 @@ namespace MySecretServices
 		[Route("api/v1/libra/uploadProducts")]
 		public IHttpActionResult UploadProducts(string ip, [FromBody] List<Product> products)
 		{
-			return Ok(products);
+            if (!ModelState.IsValid)
+            {
+				return BadRequest(ModelState);
+            }
+
+            // logic
+
+            return Ok(products);
 		}
 	}
 }
