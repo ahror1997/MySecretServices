@@ -50,9 +50,7 @@ namespace MySecretServices
 			DrvLP temp = new DrvLP();
 			temp.RemoteHost = ip;
 			int status = temp.Connect();
-
-			// logic
-
+			temp.Beep();
 			temp.Disconnect();
 
 			return Ok(status);
@@ -67,9 +65,31 @@ namespace MySecretServices
 				return BadRequest(ModelState);
             }
 
-            // logic
+			DrvLP temp = new DrvLP();
+			temp.RemoteHost = ip;
+			int status = temp.Connect();
 
-            return Ok(products);
+			foreach (Product product in products)
+			{
+				temp.Password = 30;
+				temp.PLUNumber = product.Id;
+				temp.Price = decimal.Parse(product.Price.ToString());
+				temp.ItemCode = product.Id;
+				temp.NameFirst = product.Name;
+				temp.GroupCode = product.GroupCode;
+				temp.GoodsType = product.GoodType;
+				temp.Tare = 0;
+				temp.NameSecond = "";
+				temp.PictureNumber = 0;
+				if (temp.SetPLUDataEx() != 0)
+				{
+					temp.Disconnect();
+					break;
+				}
+			}
+			temp.Disconnect();
+
+			return Ok(products);
 		}
 	}
 }
