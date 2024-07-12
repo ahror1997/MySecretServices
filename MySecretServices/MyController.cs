@@ -19,10 +19,10 @@ namespace MySecretServices
 		[Route("api/v1/printer/print")]
 		public IHttpActionResult Print([FromBody] PrintProduct product)
 		{
-            if (!ModelState.IsValid)
-            {
+			if (!ModelState.IsValid)
+			{
 				return BadRequest(ModelState);
-            }
+			}
 
             Engine engine = new Engine();
 			engine.Start();
@@ -60,10 +60,10 @@ namespace MySecretServices
 		[Route("api/v1/libra/uploadProducts")]
 		public IHttpActionResult UploadProducts(string ip, [FromBody] List<Product> products)
 		{
-            if (!ModelState.IsValid)
-            {
+			if (!ModelState.IsValid)
+			{
 				return BadRequest(ModelState);
-            }
+			}
 
 			DrvLP temp = new DrvLP();
 			temp.RemoteHost = ip;
