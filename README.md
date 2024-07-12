@@ -46,6 +46,21 @@ http://localhost:8123 <=> `{domain}`
 ]
 ```
 
+`POST` `{domain}`/api/v1/libra/setSettings
+
+* query example (required)
+```
+?ip=192.168.255.255
+```
+* body example (required)
+```
+{
+    "labelTitle": "title of label",
+    "reclameString": "lorem ipsum",
+    "shopName": "Name of the shop"
+}
+```
+
 ## Installing the service
 * Use the InstallUtil.exe tool to install the service
 * The InstallUtil.exe is located in the .NET Framework directory, e.g., `C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe``.
