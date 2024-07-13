@@ -19,8 +19,9 @@ namespace MySecretServices
 			serviceProcessInstaller.Account = ServiceAccount.LocalSystem;
 
 			// Configure the Service Installer
-			serviceInstaller.ServiceName = "My Super Secret Service";
-			serviceInstaller.Description = "A Windows Service that includes secret services. v01";
+			serviceInstaller.ServiceName = "MySuperSecretServices";
+			serviceInstaller.DisplayName = "My Super Secret Services";
+			serviceInstaller.Description = "A Windows Service that includes secret services. v02";
 			serviceInstaller.StartType = ServiceStartMode.Automatic;
 
 			Installers.Add(serviceProcessInstaller);
