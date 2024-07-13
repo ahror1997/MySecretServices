@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MySecretServices.Models
 {
@@ -20,7 +19,7 @@ namespace MySecretServices.Models
 		[Required]
 		public int Copy { get; set; }
 
-        [Required]
+		[Required]
 		public string Path { get; set; }
-    }
+	}
 }

@@ -5,12 +5,12 @@ namespace MySecretServices.Models
 	public class Settings
 	{
 		[Required]
-        public string LabelTitle { get; set; }
+		public string LabelTitle { get; set; }
 
-        [Required]
-        public string ReclameString { get; set; }
+		[Required]
+		public string ReclameString { get; set; }
 
-        [Required]
-        public string ShopName { get; set; }
-    }
+		[Required]
+		public string ShopName { get; set; }
+	}
 }
