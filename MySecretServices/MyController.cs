@@ -32,7 +32,7 @@ namespace MySecretServices
 				LabelFormatDocument labelFormatDocument = engine.Documents.Open(product.Path);
 				labelFormatDocument.SubStrings["name"].Value = product.Name;
 				labelFormatDocument.SubStrings["barcode"].Value = product.Barcode;
-				labelFormatDocument.SubStrings["price"].Value = product.Price;
+				labelFormatDocument.SubStrings["price"].Value = product.Price.ToString();
 				labelFormatDocument.SubStrings["id"].Value = product.Id;
 
 				for (int i = 0; i < product.Copy; i++)
