@@ -18,5 +18,8 @@ namespace MySecretServices.Models
 
 		[Required]
 		public int GoodType { get; set; }
+
+		[Required]
+		public int PLUNumber { get; set; }
 	}
 }

@@ -99,7 +99,7 @@ namespace MySecretServices
 				foreach (Product product in products)
 				{
 					temp.Password = 30;
-					temp.PLUNumber = product.Id;
+					temp.PLUNumber = product.PLUNumber;
 					temp.Price = decimal.Parse(product.Price.ToString());
 					temp.ItemCode = product.Id;
 					temp.NameFirst = product.Name;

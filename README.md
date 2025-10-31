@@ -37,11 +37,12 @@ http://localhost:8123 <=> `{domain}`
 ```
 [
     {
-        "id":8,  //int PLUNumber and ItemCode
-        "price":36000,  //double Price
-        "name":"Coca cola",  //string NameFirst
-        "groupCode":20,  //int GroupCode 21 or 20
-        "goodType":1,  //int  GoodsType 0 or 1
+        "id": 8,  //int ItemCode
+        "price": 36000,  //double Price
+        "name": "Coca cola",  //string NameFirst
+        "groupCode": 20,  //int GroupCode 21 or 20
+        "goodType": 1,  //int  GoodsType 0 or 1
+        "PLUNumber": 1,  //int  PLUNumber
     }
 ]
 ```
