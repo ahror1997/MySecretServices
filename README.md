@@ -27,6 +27,13 @@ http://localhost:8123 <=> `{domain}`
 ?ip=192.168.255.255
 ```
 
+`GET` `{domain}`/api/v1/libra/clear-goods
+
+* query example (required)
+```
+?ip=192.168.255.255
+```
+
 `POST` `{domain}`/api/v1/libra/uploadProducts
 
 * query example (required)
