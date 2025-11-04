@@ -59,13 +59,19 @@ namespace MySecretServices
 		{
 			var response = new BaseResponse();
 
-			try
+            DrvLP temp = new DrvLP();
+            temp.RemoteHost = ip;
+            int status = temp.Connect();
+
+            if (status != 0)
+            {
+                response.Message = "Not connected!";
+                return Ok(response);
+            }
+
+            try
 			{
-				DrvLP temp = new DrvLP();
-				temp.RemoteHost = ip;
-				int status = temp.Connect();
 				temp.Beep();
-				temp.Disconnect();
 
 				response.Success = true;
 				response.Data = new { status, ip };
@@ -74,8 +80,12 @@ namespace MySecretServices
 			{
 				response.Message = ex.Message;
 			}
+			finally
+			{
+				temp.Disconnect();
+			}
 
-			return Ok(response);
+            return Ok(response);
 		}
 
 		[HttpPost]
@@ -84,18 +94,24 @@ namespace MySecretServices
 		{
 			var response = new BaseResponse();
 
-			if (!ModelState.IsValid)
+            DrvLP temp = new DrvLP();
+            temp.RemoteHost = ip;
+            int status = temp.Connect();
+
+            if (status != 0)
+            {
+                response.Message = "Not connected!";
+                return Ok(response);
+            }
+
+            if (!ModelState.IsValid)
 			{
 				response.Errors = this.ErrorMessages(ModelState, nameof(products));
 				return Ok(response);
 			}
 
-			try
+            try
 			{
-				DrvLP temp = new DrvLP();
-				temp.RemoteHost = ip;
-				int status = temp.Connect();
-
 				foreach (Product product in products)
 				{
 					temp.Password = 30;
@@ -123,11 +139,51 @@ namespace MySecretServices
 			{
 				response.Message = ex.Message;
 			}
+			finally
+			{
+				temp.Disconnect();
+			}
 
 			return Ok(response);
 		}
 
-		[HttpPost]
+		[HttpGet]
+		[Route("api/v1/libra/clear-goods")]
+		public IHttpActionResult ClearGoods(string ip)
+		{
+            var response = new BaseResponse();
+
+            DrvLP temp = new DrvLP();
+            temp.RemoteHost = ip;
+            temp.Password = 30;
+            int status = temp.Connect();
+
+            if (status != 0)
+            {
+                response.Message = "Not connected!";
+                return Ok(response);
+            }
+
+			try
+			{
+                temp.ClearGoodsDB();
+                temp.Beep();
+                response.Success = true;
+				response.Message = "Goods database cleared.";
+            }
+            catch (Exception ex)
+			{
+				response.Message = ex.Message;
+			}
+			finally
+			{
+                temp.Disconnect();
+            }
+
+			return Ok(response);
+        }
+
+        [HttpPost]
 		[Route("api/v1/libra/setSettings")]
 		public IHttpActionResult SetSettings(string ip, [FromBody] Settings settings)
 		{
