@@ -79,7 +79,7 @@ http://localhost:8123 <=> `{domain}`
 ## Installing the service
 * Use the InstallUtil.exe tool to install the service
 * The InstallUtil.exe is located in the .NET Framework directory, e.g., `C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe``.
-* Run the following command:
+* Run the following command (Run as administrator): 
 ```
     C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe MySecretServices.exe
 ```
@@ -91,7 +91,7 @@ http://localhost:8123 <=> `{domain}`
 
 ## Uninstalling the service
 * If service is running, stop it.
-* Run the following command:
+* Run the following command (Run as administrator):
 ```
     C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /u MySecretServices.exe
 ```
