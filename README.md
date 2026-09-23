@@ -46,12 +46,27 @@ http://localhost:8123 <=> `{domain}`
     {
         "id": 8,  //int ItemCode
         "price": 36000,  //double Price
-        "name": "Coca cola",  //string NameFirst
+        "name": "Coca cola",  //string NameFirst (первые 28 символов) + NameSecond (следующие 28)
         "groupCode": 20,  //int GroupCode 21 or 20
         "goodType": 1,  //int  GoodsType 0 or 1
-        "PLUNumber": 1,  //int  PLUNumber
+        "PLUNumber": 1,  //int  PLUNumber, должен равняться id товара
     }
 ]
+```
+* ограничения драйвера: `name` режется на NameFirst/NameSecond по 28 символов каждое, хвост дальше 56 символов отбрасывается; `PLUNumber` обязан попадать в 1..PLUCount (PLUCount читается после Connect), иначе товар уходит в `failed` с кодом -9
+* загрузка не прерывается на первом сбойном товаре — пишутся все, ответ:
+```
+{
+    "success": true,   // true только когда failed пуст
+    "message": "Written 10 of 10",
+    "data": {
+        "written": 10,
+        "failed": [
+            { "id": 8, "plu": 500, "code": -9, "message": "PLU 500 вне диапазона 1..300" },
+            { "id": 12, "plu": 4, "code": 3, "message": "текст ошибки от драйвера (ResultCodeDescription)" }
+        ]
+    }
+}
 ```
 
 `POST` `{domain}`/api/v1/libra/setSettings
@@ -68,6 +83,7 @@ http://localhost:8123 <=> `{domain}`
     "shopName": "Name of the shop"
 }
 ```
+* дополнительно фиксирует на весах `PrefixBCType = 2` (печатать весовой/штучный префиксы 20/21, а не групповой код и не номер весов), иначе то, что реально печатается на этикетке, зависит от ручной настройки весов 1.2.3.1
 
 `GET` `{domain}`/api/v1/libra/getWeight
 
@@ -95,3 +111,8 @@ http://localhost:8123 <=> `{domain}`
 ```
     C:\Windows\Microsoft.NET\Framework\v4.0.30319\InstallUtil.exe /u MySecretServices.exe
 ```
+
+## Сборка и обновление инсталлера
+* Собирается только на Windows в Visual Studio, конфигурация `Release`.
+* После сборки в `MySecretServices/bin/Release` берём всё, кроме `*.pdb`, `*.InstallLog`, `*.InstallState` и папки `app.publish`.
+* Отобранное содержимое копируем в `tools/release-tools/bridge_service` и коммитим уже в том репозитории (bridge_service там хранится как собранный бинарник, не исходники).
